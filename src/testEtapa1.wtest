@@ -1,0 +1,43 @@
+import profesionales.*
+import empresa.*
+describe "test de etapa 1"{
+//Universidades
+var rosario=new Universidad(provincias=#{"SantaFe"},honorariosRecomendados=2800)
+var sanMartin=new Universidad(provincias=#{"BuenosAires"},honorariosRecomendados=3500)
+var corrientes=new Universidad(provincias=#{"Corrientes"},honorariosRecomendados=4200)
+var hurlingham=new Universidad(provincias=#{"BuenosAires"},honorariosRecomendados=8800)
+
+//Profesionales
+var juana=new ProfesionalVinculado(universidad=rosario)
+var melina=new ProfesionalAsociado(universidad=corrientes)
+var rocio=new ProfesionalLibre(universidad=hurlingham,honorariosPorHora=5000,provinciasDondePuedeTrabajar=#{"BuenosAires","SantaFe","Cordoba"})
+var luciana=new ProfesionalLibre(universidad=rosario,honorariosPorHora=3200,provinciasDondePuedeTrabajar=#{"SantaFe","EntreRios"})
+var empresa=new Empresa(profesionales=[juana,melina,rocio,luciana],honorarioDeRef=3500)
+
+
+
+
+
+test "Me va a devoler que dos de los profesionales estudian en rosario" {
+	assert.equals(2,empresa.cantidad(rosario))
+}
+test "Me va a devoler que un profesional estudia en hurlingham" {
+	assert.equals(1,empresa.cantidad(hurlingham))
+}
+test "Me va a devoler que cero profesionales estudian en sanMartin" {
+	assert.equals(0,empresa.cantidad(sanMartin))
+}
+test "La lista de las universidades formadoras son rosario,corrientes y hurlingham"{
+	assert.equals(#{rosario,corrientes,hurlingham},empresa.universidadesFormadoras())
+}
+
+test "El profesional mas caro va a ser Rocio"{
+	assert.equals([rocio],empresa.profesionalesCaros())
+}
+test "El profesional mas barato va a ser juana"{
+	assert.equals(juana,empresa.profesionalMasBarato())
+}
+test "Esta empresa es de gente acotada por que que todos trabajas en a lo sumo 3 provincias"{
+		assert.that(empresa.genteAcotada())
+}
+}
