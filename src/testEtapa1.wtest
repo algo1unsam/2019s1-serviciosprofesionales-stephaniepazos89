@@ -11,7 +11,7 @@ var hurlingham=new Universidad(provincias=#{"BuenosAires"},honorariosRecomendado
 var juana=new ProfesionalVinculado(universidad=rosario)
 var melina=new ProfesionalAsociado(universidad=corrientes)
 var rocio=new ProfesionalLibre(universidad=hurlingham,honorariosPorHora=5000,provinciasDondePuedeTrabajar=#{"BuenosAires","SantaFe","Cordoba"})
-var luciana=new ProfesionalLibre(universidad=rosario,honorariosPorHora=3200,provinciasDondePuedeTrabajar=#{"SantaFe","EntreRios"})
+var luciana=new ProfesionalLibre(universidad=rosario,honorariosPorHora=3200,provinciasDondePuedeTrabajar=#{"SantaFe","EntreRios","Corrientes","Misiones"})
 var empresa=new Empresa(profesionales=[juana,melina,rocio,luciana],honorarioDeRef=3500)
 
 
@@ -37,7 +37,10 @@ test "El profesional mas caro va a ser Rocio"{
 test "El profesional mas barato va a ser juana"{
 	assert.equals(juana,empresa.profesionalMasBarato())
 }
-test "Esta empresa es de gente acotada por que que todos trabajas en a lo sumo 3 provincias"{
-		assert.that(empresa.genteAcotada())
+//test "En empresa es de gente acotada por que que todos trabajas en a lo sumo 3 provincias"{
+		//assert.that(empresa.genteAcotada())
+//}
+test "En esta empresa no todos son gente acotada por lo que devuelve falso"{
+	assert.notThat(empresa.genteAcotada())
 }
 }
