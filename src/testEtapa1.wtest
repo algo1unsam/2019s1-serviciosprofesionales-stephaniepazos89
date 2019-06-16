@@ -1,20 +1,23 @@
 import profesionales.*
 import empresa.*
+import solicitante.*
 describe "test de etapa 1"{
 //Universidades
-var rosario=new Universidad(provincias=#{"SantaFe"},honorariosRecomendados=2800)
-var sanMartin=new Universidad(provincias=#{"BuenosAires"},honorariosRecomendados=3500)
-var corrientes=new Universidad(provincias=#{"Corrientes"},honorariosRecomendados=4200)
-var hurlingham=new Universidad(provincias=#{"BuenosAires"},honorariosRecomendados=8800)
+var rosario=new Universidad(provincias=#{"SantaFe"},honorariosRecomendados=2800,importe=0)
+var sanMartin=new Universidad(provincias=#{"BuenosAires"},honorariosRecomendados=3500,importe=0)
+var corrientes=new Universidad(provincias=#{"Corrientes"},honorariosRecomendados=4200,importe=0)
+var hurlingham=new Universidad(provincias=#{"BuenosAires"},honorariosRecomendados=8800,importe=0)
 
 //Profesionales
-var juana=new ProfesionalVinculado(universidad=rosario)
-var melina=new ProfesionalAsociado(universidad=corrientes)
-var rocio=new ProfesionalLibre(universidad=hurlingham,honorariosPorHora=5000,provinciasDondePuedeTrabajar=#{"BuenosAires","SantaFe","Cordoba"})
-var luciana=new ProfesionalLibre(universidad=rosario,honorariosPorHora=3200,provinciasDondePuedeTrabajar=#{"SantaFe","EntreRios","Corrientes","Misiones"})
-var empresa=new Empresa(profesionales=[juana,melina,rocio,luciana],honorarioDeRef=3500)
+var juana=new ProfesionalVinculado(universidad=rosario,acumDinero=0)
+var melina=new ProfesionalAsociado(universidad=corrientes,acumDinero=0)
+var rocio=new ProfesionalLibre(universidad=hurlingham,honorariosPorHora=5000,provinciasDondePuedeTrabajar=#{"BuenosAires","SantaFe","Cordoba"},acumtotalrecaudado=0)
+var luciana=new ProfesionalLibre(universidad=rosario,honorariosPorHora=3200,provinciasDondePuedeTrabajar=#{"SantaFe","EntreRios","Corrientes","Misiones"},acumtotalrecaudado=0)
+var empresa=new Empresa(profesionales=[juana,melina,rocio,luciana],honorarioDeRef=3500,clientes=[])
+var sabrina=new ProfesionalAsociado(universidad=corrientes,asociacion=asociadoDeProfesionalesDelLitoral,acumDinero=0)
 
-
+var ana=new Persona(provinciaEnLaQueVive="EntreRios")
+var utn=new Institucion(universidades=[rosario])
 
 
 
@@ -40,7 +43,79 @@ test "El profesional mas barato va a ser juana"{
 //test "En empresa es de gente acotada por que que todos trabajas en a lo sumo 3 provincias"{
 		//assert.that(empresa.genteAcotada())
 //}
-test "En esta empresa no todos son gente acotada por lo que devuelve falso"{
+test "En esta empresa no todos son gente acotada por lo que devuelve falso(a Luciana se le agrego dos provincias mas)"{
 	assert.notThat(empresa.genteAcotada())
 }
+
+test "Ana puede ser atendida por luciana"{
+	assert.that(ana.puedeSerAtendido(luciana))
+}
+test "La institucion puede ser atendida por el profesional juana"{
+	assert.that(utn.puedeSerAtendido(juana))
+}
+//test "Puede ser atendido por uno o mas solicitantes"{
+	//assert.that(utn.puedeSatisfacerUnSolicitante())
+//}
+
+test "Compruebo que profesional vinculado cobro 300 y le dona 150 a universidad"{
+		juana.cobrar(300)
+		assert.equals(150,rosario.importe())
+}
+
+test "El profesional asociado cobra 9000 y le da todo a la asociacion de profesionales del litoral"{
+		sabrina.cobrar(9000)
+		assert.equals(9000,asociadoDeProfesionalesDelLitoral.total())
+}
+
+test "El profesional libre cobra 6000 por lo que acumula 6000"{
+	rocio.cobrar(6000)
+	assert.equals(6000,rocio.acumtotalrecaudado())
+}
+
+test "El profesional libre tiene acumulado 6000 y cobra 6000 por lo que acumula 12000"{
+	rocio.cobrar(6000)
+	rocio.cobrar(6000)
+	assert.equals(12000,rocio.acumtotalrecaudado())
+}
+
+test "El profesional libre(rocio)le pasa de su dinero acumulado 2000,rocio queda en 10000 y melina en 6000 si cobra 4000"{
+		rocio.cobrar(6000)
+	    rocio.cobrar(6000)
+	    melina.cobrar(4000)
+		rocio.pasarUnaCantidad(melina,2000)
+		assert.equals(6000,melina.acumDinero())
+		assert.equals(10000,rocio.acumtotalrecaudado())
+}
+test "El profesional libre(rocio) le pasa de su dinero acumulado 2000,rocio queda con 10000 y luciana en 4000 siendo que cobra(2000)"{
+		rocio.cobrar(6000)
+	    rocio.cobrar(6000)
+	    luciana.cobrar(2000)
+		rocio.pasarUnaCantidad(luciana,2000)
+		assert.equals(4000,luciana.acumtotalrecaudado())
+		assert.equals(10000,rocio.acumtotalrecaudado())
+}
+
+test "La empresa le da servicio a ana y es atendidio por luciana que cobra 3200 por hora y el registro de trabajo es 1"{
+		empresa.darServicio(ana,luciana)
+		assert.equals(3200,luciana.honorariosPorHora())
+		
+		
+		
+}
+test "La empresa no le da servicio a ana y es atendidio por luciana que cobra 3200 por hora"{
+		assert.throwsException({empresa.darServicio(ana,melina)})
+		
+}
+
+test "Cantidad que clientes tiene la empresa en este caso 1"{
+	empresa.darServicio(ana,luciana)
+	assert.equals(1,empresa.cuantosClientesTiene())
+
+}
+
+test "la empresa tiene como cliente a ana"{
+	empresa.darServicio(ana,luciana)
+	assert.that(empresa.EsCliente(ana))
+}
+
 }
