@@ -17,6 +17,7 @@ var empresa=new Empresa(profesionales=[juana,melina,rocio,luciana],honorarioDeRe
 var sabrina=new ProfesionalAsociado(universidad=corrientes,asociacion=asociadoDeProfesionalesDelLitoral,acumDinero=0)
 
 var ana=new Persona(provinciaEnLaQueVive="EntreRios")
+var naomy=new Persona(provinciaEnLaQueVive="jujuy")
 var utn=new Institucion(universidades=[rosario])
 
 
@@ -98,10 +99,24 @@ test "El profesional libre(rocio) le pasa de su dinero acumulado 2000,rocio qued
 test "La empresa le da servicio a ana y es atendidio por luciana que cobra 3200 por hora y el registro de trabajo es 1"{
 		empresa.darServicio(ana,luciana)
 		assert.equals(3200,luciana.honorariosPorHora())
-		
-		
-		
 }
+
+test "La cantidad de registres que tiene la empresa es de 1"{
+	empresa.darServicio(ana,luciana)
+	assert.equals(1,empresa.cantidadDeRegistros())
+}
+test "La cantidad de registres que tiene la empresa es de 2 porque ana solicito otro trabajo realizado por el mismo profesional(luciana)"{
+	empresa.darServicio(ana,luciana)
+	empresa.darServicio(ana,luciana)
+	assert.equals(2,empresa.cantidadDeRegistros())
+}
+test "La cantidad de registres que tiene es 2 porque ana solicito otro trabajo realizado por luciana y uno de sabrina que se pudo realizar"{
+	empresa.darServicio(ana,luciana)
+	empresa.darServicio(ana,luciana)
+	assert.throwsException({empresa.darServicio(naomy,luciana)})
+	assert.equals(2,empresa.cantidadDeRegistros())
+}
+		
 test "La empresa no le da servicio a ana y es atendidio por luciana que cobra 3200 por hora"{
 		assert.throwsException({empresa.darServicio(ana,melina)})
 		
@@ -112,6 +127,21 @@ test "Cantidad que clientes tiene la empresa en este caso 1"{
 	assert.equals(1,empresa.cuantosClientesTiene())
 
 }
+
+
+
+test "Cantidad que clientes tiene la empresa en este caso sigue siendo 1"{
+	empresa.darServicio(ana,luciana)
+	empresa.darServicio(ana,luciana)
+	assert.equals(1,empresa.cuantosClientesTiene())
+
+}
+
+//test "La empresa le da servicio a la institucion inta y es atendidio por luciana que cobra 3200 por hora y el registro de trabajo es 1"{
+		//empresa.darServicio(ana,luciana)
+		//assert.equals(3200,luciana.honorariosPorHora())
+//}
+
 
 test "la empresa tiene como cliente a ana"{
 	empresa.darServicio(ana,luciana)

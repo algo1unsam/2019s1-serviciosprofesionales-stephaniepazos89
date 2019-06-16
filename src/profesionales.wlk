@@ -55,7 +55,7 @@ class ProfesionalVinculado {
 // a esta clase le faltan atributos y métodos
 class ProfesionalLibre {
 	var universidad
-	var property provinciasDondePuedeTrabajar=#{}
+	var property provinciasDondePuedeTrabajar
 	var property honorariosPorHora
 	var property acumtotalrecaudado
 	

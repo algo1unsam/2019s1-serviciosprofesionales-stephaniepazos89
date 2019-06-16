@@ -30,12 +30,20 @@ class Empresa {
 			self.error("No puede ser atendido")
 		}
 	}
+	
+	method cantidadDeRegistros(){
+		return registro.size()
+	}
 	method cuantosClientesTiene(){
-		return clientes.size()
+		return clientes.asSet().size()
 	}
 	
 	method EsCliente(solicitante){
 		return clientes.contains(solicitante)
+	}
+	
+	method pocoAtractivo(profesional){
+		
 	}
 	
 	
