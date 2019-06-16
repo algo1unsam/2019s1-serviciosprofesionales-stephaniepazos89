@@ -42,8 +42,8 @@ class Empresa {
 		return clientes.contains(solicitante)
 	}
 	
-	method pocoAtractivo(profesional){
-		
+	method pocoAtractivo(profesional,importe){
+	(profesional.provinciasDondePuedeTrabajar()).any(profesionales.map{prof=>prof.provinciasDondePuedeTrabajar()}).min{p=>p.cobrarImporte(importe)}
 	}
 	
 	

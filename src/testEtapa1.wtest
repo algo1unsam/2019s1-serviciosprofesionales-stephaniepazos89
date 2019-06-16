@@ -15,6 +15,7 @@ var rocio=new ProfesionalLibre(universidad=hurlingham,honorariosPorHora=5000,pro
 var luciana=new ProfesionalLibre(universidad=rosario,honorariosPorHora=3200,provinciasDondePuedeTrabajar=#{"SantaFe","EntreRios","Corrientes","Misiones"},acumtotalrecaudado=0)
 var empresa=new Empresa(profesionales=[juana,melina,rocio,luciana],honorarioDeRef=3500,clientes=[])
 var sabrina=new ProfesionalAsociado(universidad=corrientes,asociacion=asociadoDeProfesionalesDelLitoral,acumDinero=0)
+//var javier=new ProfesionalAsociado(universidad=rosario,acumDinero=0)
 
 var ana=new Persona(provinciaEnLaQueVive="EntreRios")
 var naomy=new Persona(provinciaEnLaQueVive="jujuy")
@@ -147,5 +148,18 @@ test "la empresa tiene como cliente a ana"{
 	empresa.darServicio(ana,luciana)
 	assert.that(empresa.EsCliente(ana))
 }
+
+
+
+//test "Verificar si una empresa es poco atractiva"{
+	//provinciasDondePuedeTrabajar.add("santaFe")
+	//juana.cobrarImporte(8000)
+	//luciana.cobrarImporte(10000)
+	//empresa.pocoAtractivo(javier,12000)
+	//assert.that()
+	
+	//}
+	//assert.that(pocoAtractivo(javier,))
+//}
 
 }
