@@ -1,12 +1,9 @@
-
-
-
 // esta clase está completa, no necesita nada más
 class ProfesionalAsociado {
 	var universidad
 	var property asociacion=asociadoDeProfesionalesDelLitoral
 	var property acumDinero
-	var property acum
+	
 	
 	method universidad() { return universidad }
 	method universidad(univ) { universidad = univ }
@@ -20,10 +17,6 @@ class ProfesionalAsociado {
 		acumDinero=acumDinero+importe
 		
 	}
-	method cobrarImporte(importe){
-		acum=acum+importe
-}
-	
 	
 }
 
@@ -41,7 +34,7 @@ object asociadoDeProfesionalesDelLitoral{
 class ProfesionalVinculado {
 	var universidad
 	var property acumDinero
-	var property acum
+	
 	
 	method universidad() { return universidad }
 	method universidad(univ) { universidad = univ }
@@ -53,11 +46,8 @@ class ProfesionalVinculado {
 		universidad.donaciones(importe/2)
 		acumDinero=acumDinero+importe
 }
-	method cobrarImporte(importe){
-		acum=acum+importe
-}
 	
-
+	
 }
 
 // a esta clase le faltan atributos y métodos
@@ -66,7 +56,7 @@ class ProfesionalLibre {
 	var property provinciasDondePuedeTrabajar
 	var property honorariosPorHora
 	var property acumtotalrecaudado
-	var property acum
+
 	
 	
 	method universidad() { return universidad }
@@ -80,9 +70,6 @@ class ProfesionalLibre {
 		acumtotalrecaudado=acumtotalrecaudado-importe
 		
 	}
-	method cobrarImporte(importe){
-		acum=acum+importe
-}
 	
 }
 

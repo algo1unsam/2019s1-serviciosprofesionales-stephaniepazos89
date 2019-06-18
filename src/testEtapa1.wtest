@@ -13,12 +13,18 @@ var juana=new ProfesionalVinculado(universidad=rosario,acumDinero=0)
 var melina=new ProfesionalAsociado(universidad=corrientes,acumDinero=0)
 var rocio=new ProfesionalLibre(universidad=hurlingham,honorariosPorHora=5000,provinciasDondePuedeTrabajar=#{"BuenosAires","SantaFe","Cordoba"},acumtotalrecaudado=0)
 var luciana=new ProfesionalLibre(universidad=rosario,honorariosPorHora=3200,provinciasDondePuedeTrabajar=#{"SantaFe","EntreRios","Corrientes","Misiones"},acumtotalrecaudado=0)
-var empresa=new Empresa(profesionales=[juana,melina,rocio,luciana],honorarioDeRef=3500,clientes=[])
 var sabrina=new ProfesionalAsociado(universidad=corrientes,asociacion=asociadoDeProfesionalesDelLitoral,acumDinero=0)
-//var javier=new ProfesionalAsociado(universidad=rosario,acumDinero=0)
 
+//Empresas 
+var empresa=new Empresa(profesionales=[juana,melina,rocio,luciana],honorarioDeRef=3500,clientes=[])
+
+
+//solicitantes
+//personas
 var ana=new Persona(provinciaEnLaQueVive="EntreRios")
 var naomy=new Persona(provinciaEnLaQueVive="jujuy")
+
+//instituciones
 var utn=new Institucion(universidades=[rosario])
 
 
@@ -118,7 +124,7 @@ test "La cantidad de registres que tiene es 2 porque ana solicito otro trabajo r
 	assert.equals(2,empresa.cantidadDeRegistros())
 }
 		
-test "La empresa no le da servicio a ana y es atendidio por luciana que cobra 3200 por hora"{
+test "La empresa no le da servicio a ana y es atendidio por melina "{
 		assert.throwsException({empresa.darServicio(ana,melina)})
 		
 }
@@ -129,8 +135,6 @@ test "Cantidad que clientes tiene la empresa en este caso 1"{
 
 }
 
-
-
 test "Cantidad que clientes tiene la empresa en este caso sigue siendo 1"{
 	empresa.darServicio(ana,luciana)
 	empresa.darServicio(ana,luciana)
@@ -138,10 +142,33 @@ test "Cantidad que clientes tiene la empresa en este caso sigue siendo 1"{
 
 }
 
-//test "La empresa le da servicio a la institucion inta y es atendidio por luciana que cobra 3200 por hora y el registro de trabajo es 1"{
-		//empresa.darServicio(ana,luciana)
-		//assert.equals(3200,luciana.honorariosPorHora())
-//}
+test "La empresa le da servicio a la institucion utn y es atendidio por juana que cobra 2800 por hora y el registro de trabajo es 1"{
+		empresa.darServicio(utn,juana)
+		assert.equals(2800,juana.honorariosPorHora())
+}
+
+test " La cantidad de registres que tiene la empresa es de 1 "{
+	empresa.darServicio(utn,juana)
+	assert.equals(1,empresa.cantidadDeRegistros())
+}
+test "La cantidad de registres que tiene la empresa es de 2 porque la institucion utn solicito otro trabajo 
+	  realizado por el mismo profesional(juana)"{
+	empresa.darServicio(utn,juana)
+	empresa.darServicio(utn,juana)
+	assert.equals(2,empresa.cantidadDeRegistros())
+}
+test "La cantidad de registres que tiene es 2 porque la institucion utn solicito otro trabajo 
+	  realizado por juana y uno de  que se pudo realizar"{
+	empresa.darServicio(utn,juana)
+	empresa.darServicio(utn,juana)
+	assert.throwsException({empresa.darServicio(utn,melina)})
+	assert.equals(2,empresa.cantidadDeRegistros())
+}
+		
+test "La empresa no le da servicio a utn y es atendidio por melina "{
+		assert.throwsException({empresa.darServicio(utn,melina)})
+		
+}
 
 
 test "la empresa tiene como cliente a ana"{
@@ -149,17 +176,11 @@ test "la empresa tiene como cliente a ana"{
 	assert.that(empresa.EsCliente(ana))
 }
 
+//Desafio Final
 
+test "Desafio Final"{
+	assert.that(esPocoAtractivo(ricardo))
+}
 
-//test "Verificar si una empresa es poco atractiva"{
-	//provinciasDondePuedeTrabajar.add("santaFe")
-	//juana.cobrarImporte(8000)
-	//luciana.cobrarImporte(10000)
-	//empresa.pocoAtractivo(javier,12000)
-	//assert.that()
-	
-	//}
-	//assert.that(pocoAtractivo(javier,))
-//}
 
 }

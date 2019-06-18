@@ -16,9 +16,10 @@ class Empresa {
 	method profesionalMasBarato(){return profesionales.min{c=>c.honorariosPorHora()}}
 	method genteAcotada(){return profesionales.all{provincia=>provincia.provinciasDondePuedeTrabajar().size()<=3}}
 	
-	//method puedeSatisfacerUnSolicitante(solicitante){return solicitante.any{profesional=>solicitante.puedeSerAtendido(profesional)}
+
+	
 		
-	//}	
+	
 	
 	method darServicio(solicitante,profesional){
 		if(solicitante.puedeSerAtendido(profesional)){
@@ -42,9 +43,15 @@ class Empresa {
 		return clientes.contains(solicitante)
 	}
 	
-	method pocoAtractivo(profesional,importe){
-	(profesional.provinciasDondePuedeTrabajar()).any(profesionales.map{prof=>prof.provinciasDondePuedeTrabajar()}).min{p=>p.cobrarImporte(importe)}
+	
+	//En este caso la condicion del filter es el isEmpty()
+	method esPocoAtractivo(unprofesional){
+		return (profesionales.filter{profesional=>profesional.provinciasDondePuedeTrabajar().asSet().interseccion
+			(unprofesional.provinciasDondePuedeTrabajar()).asSet().isEmpty()}).
+			any{profesional=>profesional.honorariosPorHora()<unprofesional.honorariosPorHora()}
 	}
+	
+	
 	
 	
 }
